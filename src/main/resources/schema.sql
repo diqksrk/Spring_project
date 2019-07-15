@@ -1,5 +1,12 @@
 CREATE TABLE BOARD_TABLE (
-NUM INTEGER,
-TITLE VARCAHR2(20),
+RNO INTEGER,
+TITLE VARCHAR2(20),
 CONTENTS LONG,
-CREATION_DATE DATE DEFAULT SYSDATE)
+CREATION_DATE DATE DEFAULT SYSDATE);
+
+create sequence seq_reply;
+
+alter table board_table add constraint pk_test_board primary key(rno);
+
+insert into board_table (RNO, TITLE, CONTENTS) values (seq_reply.nextval, 'goo', 'goooo');
+insert into board_table (RNO, TITLE, CONTENTS) values (seq_reply.nextval, 'boo', 'boooo');

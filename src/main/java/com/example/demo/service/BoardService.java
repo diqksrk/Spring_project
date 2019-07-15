@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.TitleDTO;
-import com.example.demo.mapper.FBoardMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.domain.BoardVO;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +9,15 @@ import java.util.List;
 
 @Service
 @Component
-public class BoardService {
-    @Autowired
-    private FBoardMapper fBoardMapper;
+public interface BoardService {
 
-    public String getDes(){
-        return fBoardMapper.getTitle();
-    }
-    public List<TitleDTO> getAllBoard(){
-        return fBoardMapper.selectAllBoard();
-    }
+    public void register(BoardVO titleDTO);
+
+    public BoardVO get(Long bno);
+
+    public boolean modify(BoardVO boardVO);
+
+    public boolean remove(Long bno);
+
+    public List<BoardVO> getList();
 }

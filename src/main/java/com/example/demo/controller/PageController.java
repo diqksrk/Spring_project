@@ -1,13 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.TitleDTO;
 import com.example.demo.service.BoardService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,13 +25,6 @@ public class PageController {
 //        return new ResponseEntity<ApiResponseMessage>(msg, httpHeaders, HttpStatus.OK);
 //    }
 
-    @GetMapping(value = "/getSample",
-            produces = { MediaType.APPLICATION_JSON_UTF8_VALUE,
-                    MediaType.APPLICATION_XML_VALUE })
-    public TitleDTO getSample() {
-        return new TitleDTO(112, "스타", "로드");
-    }
-
     @GetMapping(value = "/getText", produces = "text/plain; charset=UTF-8")
     public String getText() {
         log.info("MIME TYPE: " + MediaType.TEXT_PLAIN_VALUE);
@@ -43,8 +32,8 @@ public class PageController {
     }
 
     @GetMapping("")
-    public @ResponseBody String getDesString(TitleDTO titleDTO){
-        log.info(""+titleDTO);
+    public @ResponseBody String getDesString(){
+
         return "";
     }
 }

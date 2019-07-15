@@ -7,11 +7,42 @@
     <select id="getTitle" resultType="String">
         SELECT TITLE
         from BOARD_TABLE
-        where NUM=1
+        where RNO=1
     </select>
 
-    <select id="selectAllBoard" resultType="TitleDTO">
-        SELECT NUM,TITLE,CONTENTS from BOARD_TABLE
+    <select id="getList" resultType="com.example.demo.domain.BoardVO">
+        select *
+        from board_table
+        where bno>0
     </select>
 
+    <insert id="insert">
+        insert into board_table (BNO, TITLE, CONTENTS)
+        values (seq_board.nextval, #{title}, #{contents})
+    </insert>
+
+    <insert id="insertSelectKey">
+        <selectKey keyProperty="bno" order="BEFORE" resultType="long">
+            select seq_board.nextval from dual
+        </selectKey>
+
+        insert into board_table (BNO, TITLE, CONTENTS)
+        values (#{bno}, #{title}, #{contents})
+    </insert>
+
+    <select id="read" resultType="com.example.demo.domain.BoardVO">
+        select * from board_table where bno=#{bno}
+    </select>
+
+    <delete id="delete">
+        delete board_table where bno=#{bno}
+    </delete>
+
+    <update id="update">
+        update board_table
+        set title=#{title},
+        contents=#{contents},
+        UPDATE_DATE = sysdate
+        where bno=#{bno}
+    </update>
 </mapper>
