@@ -9,6 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/board/*")
 @Log4j2
@@ -17,10 +22,15 @@ public class BoardController {
     private BoardService service;
 
     @GetMapping("/list")
-    public String list(){
-//        log.info("llist");
-//        model.addAttribute("list", service.getList());
-        return "list";
+    public void list(Model model){
+        log.info("llist");
+
+        List<BoardVO> vo=new LinkedList<>();
+        vo=service.getList();
+        log.info("------------------------------------------------");
+
+        log.info("------------------------------------------------");
+        model.addAttribute("list", service.getList());
     }
 
     @GetMapping("/home")

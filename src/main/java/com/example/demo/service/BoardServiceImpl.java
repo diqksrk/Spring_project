@@ -9,7 +9,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import sun.awt.image.ImageWatched;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Log4j2
@@ -48,6 +50,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardVO> getList() {
         log.info("getList........");
+        List<BoardVO> vo=new LinkedList<>();
+        vo=mapper.getList();
+        log.info("------------------------------------------------------------ ");
+
 
         return mapper.getList();
     }
