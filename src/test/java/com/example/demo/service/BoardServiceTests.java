@@ -38,8 +38,30 @@ public class BoardServiceTests {
 //        log.info("생성 된 게시물의 번호 : "+board.getBno());
 //    }
 
+//    @Test
+//    public void testGetList(){
+//        service.getList().forEach(board->log.info(board));
+//    }
+
+//    @Test
+//    public void testGet(){
+//        log.info(service.get(1L));
+//    }
+
     @Test
-    public void testGetList(){
-        service.getList().forEach(board->log.info(board));
+    public void testDelete(){
+        log.info("REMOVE result: "+service.remove(2L));
+    }
+
+    @Test
+    public void testUpdate(){
+        BoardVO board=service.get(1L);
+
+        if (board==null){
+            return ;
+        }
+
+        board.setTitle("제목 수정");
+        log.info("Modify result : "+service.modify(board));
     }
 }
