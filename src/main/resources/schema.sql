@@ -1,12 +1,13 @@
 CREATE TABLE BOARD_TABLE (
-RNO INTEGER,
+BNO INTEGER,
 TITLE VARCHAR2(20),
-CONTENTS LONG,
-CREATION_DATE DATE DEFAULT SYSDATE);
+CONTENTS VARCHAR2(1000),
+CREATION_DATE DATE DEFAULT SYSDATE,
+UPDATE_DATE DATE DEFAULT SYSDATE);
 
 create sequence seq_board;
 
-alter table board_table add constraint pk_test_board primary key(rno);
+alter table board_table add constraint pk_test_board primary key(bno);
 
 insert into board_table (RNO, TITLE, CONTENTS) values (seq_board.nextval, 'goo', 'goooo');
 insert into board_table (RNO, TITLE, CONTENTS) values (seq_board.nextval, 'boo', 'boooo');

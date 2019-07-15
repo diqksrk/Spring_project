@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../includes/header.jsp"%>
 
     <div class="row">
@@ -22,26 +23,21 @@
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                             <tr>
-                                <th>Rendering engine</th>
-                                <th>Browser</th>
-                                <th>Platform(s)</th>
-                                <th>Engine version</th>
-                                <th>CSS grade</th>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성일</th>
+                                <th>수정일</th>
                             </tr>
                         </thead>
 
                         <c:forEach items="${list}" var="board">
                             <tr>
                                 <td><c:out value="${board.bno}" /></td>
-                                <%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
                                 <td><a class='move' href='<c:out value="${board.bno}"/>'>
                                         <c:out value="${board.title}" />
                                 </a></td>
-                                <td>1</td>
-                                <td><fmt:formatDate pattern="yyyy-MM-dd"
-                                        value="${board.creation_date}" /></td>
-                                <td><fmt:formatDate pattern="yyyy-MM-dd"
-                                        value="${board.update_date}" /></td>
+                                <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.creationDate}"/></td>
+                                <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}" /></td>
                             </tr>
                         </c:forEach>
                     </table>
@@ -350,4 +346,12 @@
         <!-- /.col-lg-6 -->
     </div>
     <!-- /.row -->
+
+<script type="text/javascript">
+    $(function(){
+        var result='<c:out value="${result}"/>';
+    })
+</script>
+
+
 <%@include file="../includes/footer.jsp"%>

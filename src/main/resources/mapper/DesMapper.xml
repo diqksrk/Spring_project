@@ -13,7 +13,6 @@
     <select id="getList" resultType="com.example.demo.domain.BoardVO">
         select *
         from board_table
-        where bno>0
     </select>
 
     <insert id="insert">

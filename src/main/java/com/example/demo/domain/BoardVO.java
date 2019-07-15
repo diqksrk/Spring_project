@@ -3,7 +3,7 @@ package com.example.demo.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.ibatis.type.Alias;
+import oracle.sql.DATE;
 
 import java.sql.Date;
 
@@ -14,6 +14,6 @@ public class BoardVO {
     private Long bno;
     private String title;
     private String contents;
-    private Date creation_date;
-    private Date update_date;
+    private Date creationDate;
+    private Date updateDate;
 }

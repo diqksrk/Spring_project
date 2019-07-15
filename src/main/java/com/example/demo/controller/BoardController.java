@@ -23,27 +23,26 @@ public class BoardController {
 
     @GetMapping("/list")
     public void list(Model model){
-        log.info("llist");
-
-        List<BoardVO> vo=new LinkedList<>();
-        vo=service.getList();
-        log.info("------------------------------------------------");
-
-        log.info("------------------------------------------------");
+        log.info("list");
         model.addAttribute("list", service.getList());
+    }
+
+    @GetMapping("/register")
+    public void register(){
+
+    }
+
+    @PostMapping("/register")
+    public String register(BoardVO board, RedirectAttributes rttr) {
+        log.info("register: " + board);
+        service.register(board);
+        rttr.addFlashAttribute("result", board.getBno());
+        return "redirect:/board/list";
     }
 
     @GetMapping("/home")
     public String home(){
         return "index";
-    }
-
-    @PostMapping("/register")
-    public String register(BoardVO board, RedirectAttributes rttr){
-        log.info("register: "+board);
-        service.register(board);
-        rttr.addFlashAttribute("result", board.getBno());
-        return "redirect:/board/list";
     }
 
     @GetMapping("/get")

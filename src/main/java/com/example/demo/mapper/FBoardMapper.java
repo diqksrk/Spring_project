@@ -2,6 +2,7 @@ package com.example.demo.mapper;
 
 import com.example.demo.domain.BoardVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Component
 public interface FBoardMapper {
     public String getTitle();
+
 
     public List<BoardVO> getList();
 
