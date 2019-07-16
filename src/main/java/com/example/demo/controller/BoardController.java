@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/board/*")
+@RequestMapping("/board")
 @Log4j2
 @AllArgsConstructor
 public class BoardController {
@@ -25,6 +25,13 @@ public class BoardController {
     public void list(Model model){
         log.info("list");
         model.addAttribute("list", service.getList());
+    }
+
+    @GetMapping("")
+    public String board(Model model){
+        log.info("list");
+        model.addAttribute("list", service.getList());
+        return "board/list";
     }
 
     @GetMapping("/register")
@@ -37,17 +44,12 @@ public class BoardController {
         log.info("register: " + board);
         service.register(board);
         rttr.addFlashAttribute("result", board.getBno());
-        return "redirect:/board/list";
+        return "redirect:/board";
     }
 
-    @GetMapping("/home")
-    public String home(){
-        return "index";
-    }
-
-    @GetMapping("/get")
+    @GetMapping({"/get", "/modify"})
     public void get(@RequestParam("bno") Long bno, Model model){
-        log.info("/get");
+        log.info("/get or modify");
         model.addAttribute("board", service.get(bno));
     }
 
@@ -58,7 +60,7 @@ public class BoardController {
         if (service.modify(board)){
             rttr.addFlashAttribute("result", "success");
         }
-        return "redirect:/board/list";
+        return "redirect:/board";
     }
 
      @PostMapping("/remove")
@@ -68,6 +70,6 @@ public class BoardController {
          if (service.remove(bno)) {
              rttr.addFlashAttribute("result", "success");
          }
-         return "redirect:/board/list";
+         return "redirect:/board";
      }
 }

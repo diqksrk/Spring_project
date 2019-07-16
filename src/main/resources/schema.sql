@@ -9,5 +9,5 @@ create sequence seq_board;
 
 alter table board_table add constraint pk_test_board primary key(bno);
 
-insert into board_table (RNO, TITLE, CONTENTS) values (seq_board.nextval, 'goo', 'goooo');
-insert into board_table (RNO, TITLE, CONTENTS) values (seq_board.nextval, 'boo', 'boooo');
+insert into board_table (BNO, TITLE, CONTENTS) values (seq_board.nextval, 'goo', 'goooo');
+insert into board_table (BNO, TITLE, CONTENTS) values (seq_board.nextval, 'boo', 'boooo');

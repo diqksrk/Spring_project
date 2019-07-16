@@ -7,7 +7,7 @@
     <select id="getTitle" resultType="String">
         SELECT TITLE
         from BOARD_TABLE
-        where RNO=1
+        where BNO=1
     </select>
 
     <select id="getList" resultType="com.example.demo.domain.BoardVO">
