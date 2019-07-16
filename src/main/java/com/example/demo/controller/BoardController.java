@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.BoardVO;
 import com.example.demo.domain.Criteria;
+import com.example.demo.domain.PageDTO;
 import com.example.demo.service.BoardService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -26,6 +27,7 @@ public class BoardController {
     public void list(Criteria cri, Model model){
         log.info("list");
         model.addAttribute("list", service.getList(cri));
+        model.addAttribute("pageMaker", new PageDTO(cri,123));
     }
 
     @GetMapping("")
@@ -49,7 +51,7 @@ public class BoardController {
     }
 
     @GetMapping({"/get", "/modify"})
-    public void get(@RequestParam("bno") Long bno, Model model){
+    public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model){
         log.info("/get or modify");
         model.addAttribute("board", service.get(bno));
     }
