@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.BoardVO;
+import com.example.demo.domain.Criteria;
 import com.example.demo.service.BoardService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,15 +23,15 @@ public class BoardController {
     private BoardService service;
 
     @GetMapping("/list")
-    public void list(Model model){
+    public void list(Criteria cri, Model model){
         log.info("list");
-        model.addAttribute("list", service.getList());
+        model.addAttribute("list", service.getList(cri));
     }
 
     @GetMapping("")
     public String board(Model model){
         log.info("list");
-        model.addAttribute("list", service.getList());
+//        model.addAttribute("list", service.getList());
         return "board/list";
     }
 

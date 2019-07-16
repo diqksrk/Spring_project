@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.BoardVO;
+import com.example.demo.domain.Criteria;
 import com.example.demo.mapper.FBoardMapper;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -44,9 +45,15 @@ public class BoardServiceImpl implements BoardService {
         return mapper.delete(bno)==1;
     }
 
+//    @Override
+//    public List<BoardVO> getList() {
+//        log.info("getList........");
+//        return mapper.getList();
+//    }
+
     @Override
-    public List<BoardVO> getList() {
-        log.info("getList........");
-        return mapper.getList();
+    public List<BoardVO> getList(Criteria cri) {
+        log.info("getList with criteria"+cri);
+        return mapper.getListWithPaging(cri);
     }
 }

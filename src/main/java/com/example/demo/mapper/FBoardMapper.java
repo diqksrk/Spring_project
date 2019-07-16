@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.domain.BoardVO;
+import com.example.demo.domain.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.List;
 public interface FBoardMapper {
     public String getTitle();
 
+    public List<BoardVO> getListWithPaging(Criteria cri);
 
     public List<BoardVO> getList();
 
