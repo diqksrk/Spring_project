@@ -4,6 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.mapper.FBoardMapper">
+    <sql id="criteria">
+        <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+            <foreach item='type' collection="typeArr">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type=='T'.toString()">
+                            title like '%' || #{keyword} || '%'
+                        </when>
+                        <when test="type=='C'.toString()">
+                            contents like '%' || #{keyword} || '%'
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
+
+
     <select id="getTitle" resultType="String">
         SELECT TITLE
         from BOARD_TABLE
@@ -12,19 +30,39 @@
 
     <select id="getListWithPaging" resultType="com.example.demo.domain.BoardVO">
 		<![CDATA[
-		select bno, title, contents, creationDate, updateDate
-		 from (
+		select
+		 bno, title, contents, creationDate, updateDate
+		from (
 		    select /*+INDEX_DESC(board_table pk_test_board) */ rownum rn, bno, title, contents, creationDate, updateDate
 		    from board_table
-		    where rownum <= #{pageNum}*#{amount}
-	    	)
-		where rn > (#{pageNum}-1) * #{amount}
+		    where
+        ]]>
+        
+        <include refid="criteria"></include>
+        
+        <![CDATA[
+            rownum <= #{pageNum} * #{amount}
+            )
+         where rn > (#{pageNum} -1) * #{amount}
         ]]>
     </select>
 
     <select id="getList" resultType="com.example.demo.domain.BoardVO">
         select *
         from board_table
+    </select>
+
+    <select id="read" resultType="com.example.demo.domain.BoardVO">
+        select * from board_table where bno=#{bno}
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        select count(*) from board_table
+        where
+
+        <include refid="criteria"></include>
+
+        bno > 0
     </select>
 
     <insert id="insert">
@@ -41,10 +79,6 @@
         values (#{bno}, #{title}, #{contents})
     </insert>
 
-    <select id="read" resultType="com.example.demo.domain.BoardVO">
-        select * from board_table where bno=#{bno}
-    </select>
-
     <delete id="delete">
         delete board_table where bno=#{bno}
     </delete>
@@ -53,7 +87,7 @@
         update board_table
         set title=#{title},
         contents=#{contents},
-        UPDATE_DATE = sysdate
+        UPDATEDATE = sysdate
         where bno=#{bno}
     </update>
 </mapper>

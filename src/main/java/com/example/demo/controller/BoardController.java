@@ -6,6 +6,7 @@ import com.example.demo.domain.PageDTO;
 import com.example.demo.service.BoardService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import oracle.jdbc.proxy.annotation.Methods;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,13 @@ public class BoardController {
 
     @GetMapping("/list")
     public void list(Criteria cri, Model model){
-        log.info("list");
+        log.info("list " + cri);
         model.addAttribute("list", service.getList(cri));
-        model.addAttribute("pageMaker", new PageDTO(cri,123));
+//        model.addAttribute("pageMaker", new PageDTO(cri,123));
+
+        int total=service.getTotal(cri);
+        log.info("total : "+total);
+        model.addAttribute("pageMaker", new PageDTO(cri,total));
     }
 
     @GetMapping("")
@@ -57,22 +62,34 @@ public class BoardController {
     }
 
     @PostMapping("/modify")
-    public String modify(BoardVO board, RedirectAttributes rttr){
+    public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri , RedirectAttributes rttr){
         log.info("modify : "+board);
 
         if (service.modify(board)){
             rttr.addFlashAttribute("result", "success");
         }
-        return "redirect:/board";
+
+        rttr.addAttribute("pageNum", cri.getPageNum());
+        rttr.addAttribute("amount", cri.getAmount());
+        rttr.addAttribute("type",cri.getType());
+        rttr.addAttribute("keyword",cri.getKeyword());
+
+        return "redirect:/board/list";
     }
 
      @PostMapping("/remove")
-     public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr)
+     public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr)
      {
          log.info("remove..." + bno);
          if (service.remove(bno)) {
              rttr.addFlashAttribute("result", "success");
          }
-         return "redirect:/board";
+
+         rttr.addAttribute("pageNum", cri.getPageNum());
+         rttr.addAttribute("amount", cri.getAmount());
+         rttr.addAttribute("type",cri.getType());
+         rttr.addAttribute("keyword",cri.getKeyword());
+
+         return "redirect:/board/list";
      }
 }

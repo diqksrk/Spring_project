@@ -31,10 +31,4 @@ public class PageController {
         log.info("MIME TYPE: " + MediaType.TEXT_PLAIN_VALUE);
         return "안녕하세요";
     }
-
-    @GetMapping("")
-    public @ResponseBody String getDesString(){
-
-        return "";
-    }
 }

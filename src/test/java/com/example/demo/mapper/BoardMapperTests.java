@@ -19,15 +19,27 @@ public class BoardMapperTests {
     @Autowired
     private FBoardMapper mapper;
 
-    @Test
-    public void testPaging(){
-        Criteria cri=new Criteria();
+//    @Test
+//    public void testPaging(){
+//        Criteria cri=new Criteria();
+//
+//        cri.setPageNum((2));
+//        cri.setAmount(10);
+//
+//        List<BoardVO> list=mapper.getListWithPaging(cri);
+//
+//        list.forEach(board->log.info(board.getBno()));
+//    }
 
-        cri.setPageNum((2));
-        cri.setAmount(10);
+    @Test
+    public void testSearch(){
+        Criteria cri=new Criteria();
+        cri.setKeyword("새로");
+        cri.setType("");
 
         List<BoardVO> list=mapper.getListWithPaging(cri);
 
-        list.forEach(board->log.info(board.getBno()));
+        list.forEach(board->log.info(board));
+
     }
 }
