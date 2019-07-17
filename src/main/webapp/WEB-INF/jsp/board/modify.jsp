@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
 
-
 <div class="row">
   <div class="col-lg-12">
     <h1 class="page-header">Board Modify</h1>
@@ -22,11 +21,10 @@
       <div class="panel-body">
 
   <form role="form" action="/board/modify" method="post">
-
     <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
     <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
-    <input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'>
-    <input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'>
+    <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+    <input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
 
 <div class="form-group">
   <label>Bno</label>
@@ -57,13 +55,10 @@
     value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${board.updateDate}" />'  readonly="readonly">
 </div> -->
 
-
-
   <button type="submit" data-oper='modify' class="btn btn-default">Modify</button>
   <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
   <button type="submit" data-oper='list' class="btn btn-info">List</button>
 </form>
-
 
       </div>
       <!--  end panel-body -->
