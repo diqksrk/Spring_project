@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Criteria;
+import com.example.demo.domain.ReplyPageDTO;
 import com.example.demo.domain.ReplyVO;
 import com.example.demo.service.ReplyService;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 
@@ -35,20 +37,20 @@ public class ReplyController {
 
     }
 
-    @GetMapping(value = "/pages/{bno}/{page}", produces = {
-            MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
-	 public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
+    @GetMapping(value = "/pages/{bno}/{page}",
+            produces={MediaType.APPLICATION_JSON_UTF8_VALUE})
+	 public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
 
-         log.info("getList.................");
          Criteria cri = new Criteria(page,10);
-         log.info(cri);
+         log.info("get Reply List bno: "+bno);
 
-	     return new ResponseEntity<>(service.getList(cri, bno), HttpStatus.OK);
+         log.info("cri : "+cri);
+
+	     return new ResponseEntity<>(service.getListPage(cri,bno), HttpStatus.OK);
 	 }
 
     @GetMapping(value = "/{rno}",
-            produces = { MediaType.APPLICATION_XML_VALUE,
-                    MediaType.APPLICATION_JSON_UTF8_VALUE })
+            produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     public ResponseEntity<ReplyVO> get(@PathVariable("rno") Long rno) {
 
         log.info("get: " + rno);
@@ -81,4 +83,6 @@ public class ReplyController {
                 ? new ResponseEntity<>("success", HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Criteria;
+import com.example.demo.domain.ReplyPageDTO;
 import com.example.demo.domain.ReplyVO;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,5 @@ public interface ReplyService {
 
     public List<ReplyVO> getList(Criteria cri, Long bno);
 
-
+    public ReplyPageDTO getListPage(Criteria cri, Long bno);
 }

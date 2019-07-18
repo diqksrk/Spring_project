@@ -30,3 +30,6 @@ alter table tbl_reply add constraint pk_reply primary key(rno);
 
 alter table tbl_reply add constraint fk_reply_board
 foreign key (bno) references board_table (bno);
+
+<!-- insert example -->
+insert into tbl_reply (rno, bno, reply, replyer) values (seq_reply.nextval, 1048616, 'bzxc', 'dasdas');

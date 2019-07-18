@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Criteria;
+import com.example.demo.domain.ReplyPageDTO;
 import com.example.demo.domain.ReplyVO;
 import com.example.demo.mapper.ReplyMapper;
 import com.example.demo.service.ReplyService;
@@ -44,6 +45,11 @@ public class ReplyServiceImpl implements ReplyService{
 
         log.info("remove....."+rno);
         return mapper.delete(rno);
+    }
+
+    @Override
+    public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+        return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri,bno));
     }
 
     @Override
