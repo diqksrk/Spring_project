@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface ReplyService {
+
     public int register(ReplyVO vo);
 
     public ReplyVO get(Long rno);

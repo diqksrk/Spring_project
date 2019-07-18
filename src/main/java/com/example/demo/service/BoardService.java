@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@Component
 public interface BoardService {
 
     public void register(BoardVO titleDTO);
