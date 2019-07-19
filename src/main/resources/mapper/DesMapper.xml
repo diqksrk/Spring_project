@@ -31,9 +31,10 @@
     <select id="getListWithPaging" resultType="com.example.demo.domain.BoardVO">
 		<![CDATA[
 		select
-		 bno, title, contents, creationDate, updateDate
+		 bno, title, contents, creationDate, updateDate, replycnt
 		from (
-		    select /*+INDEX_DESC(board_table pk_test_board) */ rownum rn, bno, title, contents, creationDate, updateDate
+		    select /*+INDEX_DESC(board_table pk_test_board) */ rownum rn, bno, title, contents, creationDate, updateDate,
+		        replycnt
 		    from board_table
 		    where
         ]]>
@@ -90,4 +91,9 @@
         UPDATEDATE = sysdate
         where bno=#{bno}
     </update>
+
+    <update id="updateReplyCnt">
+        update board_table set replycnt = replycnt + #{amount} where bno = #{bno}
+    </update>
+
 </mapper>

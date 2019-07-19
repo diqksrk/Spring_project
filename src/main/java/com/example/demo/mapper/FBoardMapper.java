@@ -3,6 +3,7 @@ package com.example.demo.mapper;
 import com.example.demo.domain.BoardVO;
 import com.example.demo.domain.Criteria;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -28,4 +29,6 @@ public interface FBoardMapper {
     public int update(BoardVO boardVO);
 
     public int getTotalCount(Criteria cri);
+
+    public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 }

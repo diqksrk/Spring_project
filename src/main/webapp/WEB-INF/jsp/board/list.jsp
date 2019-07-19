@@ -39,8 +39,10 @@
 							<td><c:out value="${board.bno}" /></td>
 							<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
 
-							<td><a class='move' href='<c:out value="${board.bno}"/>'>
-									<c:out value="${board.title}" /></a></td>
+							<td>
+                              <a class='move' href='<c:out value="${board.bno}"/>'>
+                              <c:out value="${board.title}" />   <b>[  <c:out value="${board.replyCnt}" />  ]</b>
+                              </a>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.creationDate}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"

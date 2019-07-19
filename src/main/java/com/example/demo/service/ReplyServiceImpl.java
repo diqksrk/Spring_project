@@ -3,14 +3,14 @@ package com.example.demo.service;
 import com.example.demo.domain.Criteria;
 import com.example.demo.domain.ReplyPageDTO;
 import com.example.demo.domain.ReplyVO;
+import com.example.demo.mapper.FBoardMapper;
 import com.example.demo.mapper.ReplyMapper;
 import com.example.demo.service.ReplyService;
 import lombok.AllArgsConstructor;
-import lombok.Setter;
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,9 +21,15 @@ public class ReplyServiceImpl implements ReplyService{
 
     private ReplyMapper mapper;
 
+    private FBoardMapper boardmapper;
+
+    @Transactional
     @Override
     public int register(ReplyVO vo) {
         log.info("register........"+vo);
+
+        boardmapper.updateReplyCnt(vo.getBno(),1);
+
         return mapper.insert(vo);
     }
 
@@ -40,10 +46,15 @@ public class ReplyServiceImpl implements ReplyService{
         return mapper.update(vo);
     }
 
+    @Transactional
     @Override
     public int remove(Long rno) {
 
         log.info("remove....."+rno);
+
+        ReplyVO vo=mapper.read(rno);
+
+        boardmapper.updateReplyCnt(vo.getBno(), -1);
         return mapper.delete(rno);
     }
 

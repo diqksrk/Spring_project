@@ -5,6 +5,7 @@ import com.example.demo.mapper.Sample2Mapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Log4j2
@@ -15,6 +16,7 @@ public class SampleTxServiceImpl implements SampleTxService {
 
     private Sample2Mapper mapper2;
 
+    @Transactional
     @Override
     public void addData(String value) {
         log.info("mapper1..........");
