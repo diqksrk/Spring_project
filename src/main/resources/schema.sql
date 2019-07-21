@@ -11,6 +11,11 @@ create sequence seq_board;
 
 alter table board_table add constraint pk_test_board primary key(bno);
 
+alter table board_table add (replycnt number default 0);
+
+update board_table set replycnt = (select count(rno) from tbl_reply
+where tbl_reply.bno = board_table.bno);
+
 insert into board_table (BNO, TITLE, CONTENTS) values (seq_board.nextval, 'goo', 'goooo');
 insert into board_table (BNO, TITLE, CONTENTS) values (seq_board.nextval, 'boo', 'boooo');
 
@@ -33,3 +38,5 @@ foreign key (bno) references board_table (bno);
 
 <!-- insert example -->
 insert into tbl_reply (rno, bno, reply, replyer) values (seq_reply.nextval, 1048616, 'bzxc', 'dasdas');
+
+tbl_attach

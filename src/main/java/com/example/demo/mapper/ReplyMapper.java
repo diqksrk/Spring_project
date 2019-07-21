@@ -2,6 +2,7 @@ package com.example.demo.mapper;
 
 import com.example.demo.domain.Criteria;
 import com.example.demo.domain.ReplyVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

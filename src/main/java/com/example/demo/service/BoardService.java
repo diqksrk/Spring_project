@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.BoardAttachVO;
 import com.example.demo.domain.BoardVO;
 import com.example.demo.domain.Criteria;
 import lombok.extern.log4j.Log4j;
@@ -23,4 +24,6 @@ public interface BoardService {
     public List<BoardVO> getList(Criteria cri);
 
     public int getTotal(Criteria cri);
+
+    public List<BoardAttachVO> getAttachList(Long bno);
 }

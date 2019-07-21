@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import oracle.sql.DATE;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,4 +19,6 @@ public class BoardVO {
     private Date updateDate;
 
     private int replyCnt;
+
+    private List<BoardAttachVO> attachList;
 }
