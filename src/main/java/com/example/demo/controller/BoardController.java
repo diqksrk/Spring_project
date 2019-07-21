@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -78,6 +81,34 @@ public class BoardController {
         return new ResponseEntity<>(service.getAttachList(bno), HttpStatus.OK);
     }
 
+    private void deleteFiles(List<BoardAttachVO> attachList) {
+
+        if(attachList == null || attachList.size() == 0) {
+            return;
+        }
+
+        log.info("delete attach files...................");
+        log.info(attachList);
+
+        attachList.forEach(attach -> {
+            try {
+                Path file  = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
+
+                Files.deleteIfExists(file);
+
+                if(Files.probeContentType(file).startsWith("image")) {
+
+                    Path thumbNail = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\s_" + attach.getUuid()+"_"+ attach.getFileName());
+
+                    Files.delete(thumbNail);
+                }
+
+            }catch(Exception e) {
+                log.error("delete file error" + e.getMessage());
+            }//end catch
+        });//end foreachd
+    }
+
 
     @GetMapping({"/get", "/modify"})
     public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model){
@@ -102,20 +133,20 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-     @PostMapping("/remove")
-     public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr)
-     {
-         log.info("remove..." + bno);
-         if (service.remove(bno)) {
-             rttr.addFlashAttribute("result", "success");
-         }
+    @PostMapping("/remove")
+    public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
 
-         rttr.addAttribute("pageNum", cri.getPageNum());
-         rttr.addAttribute("amount", cri.getAmount());
-         rttr.addAttribute("type",cri.getType());
-         rttr.addAttribute("keyword",cri.getKeyword());
+        log.info("remove..." + bno);
 
-         //"redirect:/board/list" + cri.getListLink()"
-         return "redirect:/board/list";
-     }
+        List<BoardAttachVO> attachList = service.getAttachList(bno);
+
+        if (service.remove(bno)) {
+
+            // delete Attach Files
+            deleteFiles(attachList);
+
+            rttr.addFlashAttribute("result", "success");
+        }
+        return "redirect:/board/list" + cri.getListLink();
+    }
 }
