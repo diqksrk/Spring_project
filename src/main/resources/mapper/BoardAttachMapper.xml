@@ -26,12 +26,16 @@
 
 	</delete>
 
-    <select id="getOldFiles"
-            resultType="com.example.demo.domain.BoardAttachVO">
+    <select id="getOldFiles" resultType="com.example.demo.domain.BoardAttachVO">
 
 		select * from tbl_attach where uploadpath = to_char(sysdate -1 ,'yyyy\mm\dd')
 
 	</select>
 
+	<select id="getOldFiles" resultType="com.example.demo.domain.BoardAttachVO">
+
+		select * from tbl_attach where uploadpath = to_char(sysdate -1, 'yyyy\mm\dd')
+
+	</select>
 
 </mapper>
