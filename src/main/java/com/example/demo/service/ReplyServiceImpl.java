@@ -58,6 +58,12 @@ public class ReplyServiceImpl implements ReplyService{
         return mapper.delete(rno);
     }
 
+    public int deleteAll(Long bno){
+        log.info("delete all reply");
+
+        return mapper.deleteAll(bno);
+    }
+
     @Override
     public ReplyPageDTO getListPage(Criteria cri, Long bno) {
         return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri,bno));

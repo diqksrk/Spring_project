@@ -5,12 +5,14 @@ import com.example.demo.domain.BoardVO;
 import com.example.demo.domain.Criteria;
 import com.example.demo.domain.PageDTO;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.ReplyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import oracle.jdbc.proxy.annotation.Methods;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BoardController {
     private BoardService service;
+    private ReplyService rservice;
 
     @GetMapping("/list")
     public void list(Criteria cri, Model model){
@@ -51,11 +54,13 @@ public class BoardController {
     }
 
     @GetMapping("/register")
+    @PreAuthorize("isAuthenticated()")
     public void register(){
 
     }
 
     @PostMapping("/register")
+    @PreAuthorize("isAuthenticated()")
     public String register(BoardVO board, RedirectAttributes rttr) {
         log.info("=================================");
 
@@ -68,7 +73,9 @@ public class BoardController {
         log.info("=================================");
 
         service.register(board);
+
         rttr.addFlashAttribute("result", board.getBno());
+
         return "redirect:/board/list";
     }
 
@@ -139,6 +146,8 @@ public class BoardController {
         log.info("remove..." + bno);
 
         List<BoardAttachVO> attachList = service.getAttachList(bno);
+
+        rservice.deleteAll(bno);
 
         if (service.remove(bno)) {
 

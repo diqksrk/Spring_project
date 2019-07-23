@@ -2,6 +2,8 @@
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <%@include file="../includes/header.jsp"%>
 
 <div class="row">
@@ -36,13 +38,29 @@
             readonly="readonly"><c:out value="${board.contents}" /></textarea>
         </div>
 
+
+
 <%-- 		<button data-oper='modify' class="btn btn-default">
         <a href="/board/modify?bno=<c:out value="${board.bno}"/>">Modify</a></button>
         <button data-oper='list' class="btn btn-info">
         <a href="/board/list">List</a></button> --%>
 
 
+<!-- <button data-oper='modify' class="btn btn-default">Modify</button> -->
+
+
+<!-- <sec:authentication property="principal" var="pinfo"/>
+
+<sec:authorize access="isAuthenticated()">
+
+<c:if test="${pinfo.username eq board.writer}">
+
 <button data-oper='modify' class="btn btn-default">Modify</button>
+
+</c:if>
+</sec:authorize> -->
+
+
 <button data-oper='list' class="btn btn-info">List</button>
 
 <%-- <form id='operForm' action="/boad/modify" method="get">
@@ -152,11 +170,12 @@
 
   <div class="col-lg-12">
 
-    <!-- /.panel -->
-   <div class="panel-heading">
-           <i class="fa fa-comments fa-fw"></i> Reply
+       <div class="panel-heading">
+            <i class="fa fa-comments fa-fw"></i> Reply
+           <sec:authorize access="isAuthenticated()">
            <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
-         </div>
+           </sec:authorize>
+        </div>
 
       <!-- /.panel-heading -->
       <div class="panel-body">
