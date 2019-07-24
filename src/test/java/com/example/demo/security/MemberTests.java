@@ -19,7 +19,8 @@ import javax.sql.DataSource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Log4j2
-@SpringBootTest
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+        "file:src/main/webapp/WEB-INF/spring/security-context.xml"})
 public class MemberTests {
 
     @Setter(onMethod_ = @Autowired)

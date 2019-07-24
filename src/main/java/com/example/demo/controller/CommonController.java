@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class CommonController {
 
     @GetMapping("/customLogin")
-    public String loginInput(String error, String logout, Model model) {
+    public void loginInput(String error, String logout, Model model) {
 
         log.info("error: " + error);
         log.info("logout: " + logout);
@@ -23,14 +23,12 @@ public class CommonController {
         if (logout != null) {
             model.addAttribute("logout", "Logout!!");
         }
-        return "board/customLogin";
     }
 
     @GetMapping("/customLogout")
-    public String logoutGET() {
+    public void logoutGET() {
 
         log.info("custom logout");
-        return "sample/customLogout";
     }
 
     @PostMapping("/customLogout")
@@ -38,7 +36,7 @@ public class CommonController {
 
         log.info("post custom logout");
 
-        return "sample/customLogout";
+        return "redirect:/board/list";
     }
 
 

@@ -60,18 +60,16 @@
 <!-- <button data-oper='modify' class="btn btn-default">Modify</button> -->
 
 
-<!-- <sec:authentication property="principal" var="pinfo"/>
+<sec:authentication property="principal" var="pinfo"/>
 
 <sec:authorize access="isAuthenticated()">
 
-<c:if test="${pinfo.username eq board.writer}">
+  <c:if test="${pinfo.username eq board.writer}">
 
+      <button data-oper='modify' class="btn btn-default">Modify</button>
 
-
-</c:if>
-</sec:authorize> -->
-
-<button data-oper='modify' class="btn btn-default">Modify</button>
+  </c:if>
+</sec:authorize>
 <button data-oper='list' class="btn btn-info">List</button>
 
 <%-- <form id='operForm' action="/boad/modify" method="get">
@@ -181,9 +179,9 @@
 
        <div class="panel-heading">
             <i class="fa fa-comments fa-fw"></i> Reply
-<%--           <sec:authorize access="isAuthenticated()">--%>
+           <sec:authorize access="isAuthenticated()">
            <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
-<%--           </sec:authorize>--%>
+           </sec:authorize>
         </div>
 
       <!-- /.panel-heading -->
@@ -264,6 +262,8 @@ $(document).ready(function() {
         replyService.getList({bno:bnoValue,page: page|| 1 }, function(replyCnt, list) {
 
         console.log("list: " + list);
+        // console.log(list[0]);
+        // console.log(list[0].replyDate);
 
         if (page == -1){
             pageNum=Math.ceil(replyCnt/10.0);
@@ -278,15 +278,24 @@ $(document).ready(function() {
             return;
          }
 
-         for (var i = 0, len = list.length || 0; i < len; i++) {
-           str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-           str +="  <div><div class='header'><strong class='primary-font'>"
-        	   +list[i].replyer+"</strong>";
-           str +="    <small class='pull-right text-muted'>"
-               +replyService.displayTime(list[i].replyDate)+"</small></div>";
-           //replyService.displayTime(list[i].replyDate)
-           str +="    <p>"+list[i].reply+"</p></div></li>";
-         }
+         // for (var i = 0, len = list.length || 0; i < len; i++) {
+         //   str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+         //   str +="  <div><div class='header'><strong class='primary-font'>"
+        	//    +list[i].replyer+"</strong>";
+         //   str +="    <small class='pull-right text-muted'>"
+         //       +replyService.displayTime(list[i].replyDate)+"</small></div>";
+         //   //replyService.displayTime(list[i].replyDate)
+         //   str +="    <p>"+list[i].reply+"</p></div></li>";
+         // }
+
+            for (var i = 0, len = list.length || 0; i < len; i++) {
+                str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+                str +="  <div><div class='header'><strong class='primary-font'>["
+                    +list[i].rno+"] "+list[i].replyer+"</strong>";
+                str +="    <small class='pull-right text-muted'>"
+                    +replyService.displayTime(list[i].replydate)+"</small></div>";
+                str +="    <p>"+list[i].reply+"</p></div></li>";
+            }
 
          replyUL.html(str);
 
@@ -304,19 +313,25 @@ $(document).ready(function() {
      var modalRemoveBtn = $("#modalRemoveBtn");
      var modalRegisterBtn = $("#modalRegisterBtn");
 
+
+
+    var csrfHeaderName ="${_csrf.headerName}";
+    var csrfTokenValue="${_csrf.token}";
+
      $("#addReplyBtn").on("click", function(e){
 
-           modal.find("input").val("");
-           modalInputReplyDate.closest("div").hide();
-           modal.find("button[id !='modalCloseBtn']").hide();
+         modal.find("input").val("");
+         modal.find("input[name='replyer']").val(replyer);
+         modalInputReplyDate.closest("div").hide();
+         modal.find("button[id !='modalCloseBtn']").hide();
 
-           modalRegisterBtn.show();
+         modalRegisterBtn.show();
 
-           $(".modal").modal("show");
+         $(".modal").modal("show");
 
      });
 
-     modalRegisterBtn.on("click",function(e){
+    modalRegisterBtn.on("click",function(e){
 
        var reply = {
              reply: modalInputReply.val(),
@@ -330,38 +345,46 @@ $(document).ready(function() {
          modal.find("input").val("");
          modal.modal("hide");
 
-         //showList(1);
+         // showList(1);
          showList(-1);
 
        });
 
      });
 
-     modalModBtn.on("click", function(e){
+    modalRemoveBtn.on("click", function (e){
 
-      var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
+        var rno = modal.data("rno");
 
-      replyService.update(reply, function(result){
+        console.log("RNO: " + rno);
+        console.log("REPLYER: " + replyer);
 
-        alert(result);
-        modal.modal("hide");
-        showList(1);
+        if(!replyer){
+            alert("로그인후 삭제가 가능합니다.");
+            modal.modal("hide");
+            return;
+        }
 
-      });
+        var originalReplyer = modalInputReplyer.val();
 
-    });
+        console.log("Original Replyer: " + originalReplyer);
 
-   modalRemoveBtn.on("click", function (e){
+        if(replyer  != originalReplyer){
 
-      var rno = modal.data("rno");
+            alert("자신이 작성한 댓글만 삭제가 가능합니다.");
+            modal.modal("hide");
+            return;
 
-      replyService.remove(rno, function(result){
+        }
 
-          alert(result);
-          modal.modal("hide");
-          showList(1);
 
-      });
+        replyService.remove(rno, originalReplyer, function(result){
+
+            alert(result);
+            modal.modal("hide");
+            showList(pageNum);
+
+        });
 
     });
 
@@ -373,7 +396,7 @@ $(document).ready(function() {
 
        modalInputReply.val(reply.reply);
        modalInputReplyer.val(reply.replyer);
-       modalInputReplyDate.val(replyService.displayTime( reply.replyDate))
+       modalInputReplyDate.val(replyService.displayTime( reply.replydate))
        .attr("readonly","readonly");
        modal.data("rno", reply.rno);
 
@@ -443,19 +466,53 @@ $(document).ready(function() {
           showList(pageNum);
         });
 
+    var replyer = null;
+
+    <sec:authorize access="isAuthenticated()">
+
+    replyer = '<sec:authentication property="principal.username"/>';
+
+    </sec:authorize>
+
+
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+    });
+
+
     modalModBtn.on("click", function(e){
 
-       	  var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
+        var originalReplyer = modalInputReplyer.val();
 
-       	  replyService.update(reply, function(result){
+        var reply = {rno:modal.data("rno"),
+                    reply: modalInputReply.val(),
+                    replyer:originalReplyer};
 
-       	    alert(result);
-       	    modal.modal("hide");
-       	    showList(pageNum);
+        if(!replyer){
+            alert("로그인후 수정이 가능합니다.");
+            modal.modal("hide");
+            return;
+        }
 
-       	  });
+        console.log("Original Replyer: " + originalReplyer);
 
-       	});
+        if(replyer  != originalReplyer){
+
+            alert("자신이 작성한 댓글만 수정이 가능합니다.");
+            modal.modal("hide");
+            return;
+
+        }
+
+        replyService.update(reply, function(result){
+
+            alert(result);
+            modal.modal("hide");
+            showList(pageNum);
+
+        });
+
+    });
 
 
   var operForm = $("#operForm");
