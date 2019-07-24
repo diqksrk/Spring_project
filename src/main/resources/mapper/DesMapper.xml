@@ -24,18 +24,18 @@
 
     <select id="getTitle" resultType="String">
         SELECT TITLE
-        from BOARD_TABLE
+        from tbl_board
         where BNO=1
     </select>
 
     <select id="getListWithPaging" resultType="com.example.demo.domain.BoardVO">
 		<![CDATA[
 		select
-		 bno, title, contents, creationDate, updateDate, replycnt
+		 bno, title, contents, creationDate, updateDate, replycnt, writer
 		from (
-		    select /*+INDEX_DESC(board_table pk_test_board) */ rownum rn, bno, title, contents, creationDate, updateDate,
+		    select /*+INDEX_DESC(tbl_board pk_test_board) */ rownum rn, bno, title, contents, creationDate, updateDate, writer,
 		        replycnt
-		    from board_table
+		    from tbl_board
 		    where
         ]]>
         
@@ -50,15 +50,15 @@
 
     <select id="getList" resultType="com.example.demo.domain.BoardVO">
         select *
-        from board_table
+        from tbl_board
     </select>
 
     <select id="read" resultType="com.example.demo.domain.BoardVO">
-        select * from board_table where bno=#{bno}
+        select * from tbl_board where bno=#{bno}
     </select>
 
     <select id="getTotalCount" resultType="int">
-        select count(*) from board_table
+        select count(*) from tbl_board
         where
 
         <include refid="criteria"></include>
@@ -67,8 +67,8 @@
     </select>
 
     <insert id="insert">
-        insert into board_table (BNO, TITLE, CONTENTS)
-        values (seq_board.nextval, #{title}, #{contents})
+        insert into tbl_board (BNO, TITLE, CONTENTS, writer)
+        values (seq_board.nextval, #{title}, #{contents}, #{writer})
     </insert>
 
     <insert id="insertSelectKey">
@@ -76,16 +76,16 @@
             select seq_board.nextval from dual
         </selectKey>
 
-        insert into board_table (BNO, TITLE, CONTENTS)
-        values (#{bno}, #{title}, #{contents})
+        insert into tbl_board (BNO, TITLE, CONTENTS, writer)
+        values (#{bno}, #{title}, #{contents}, #{writer})
     </insert>
 
     <delete id="delete">
-        delete board_table where bno=#{bno}
+        delete tbl_board where bno=#{bno}
     </delete>
 
     <update id="update">
-        update board_table
+        update tbl_board
         set title=#{title},
         contents=#{contents},
         UPDATEDATE = sysdate
@@ -93,7 +93,7 @@
     </update>
 
     <update id="updateReplyCnt">
-        update board_table set replycnt = replycnt + #{amount} where bno = #{bno}
+        update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
     </update>
 
 </mapper>

@@ -2,12 +2,15 @@ package com.example.demo.mapper;
 
 import com.example.demo.domain.BoardVO;
 import com.example.demo.domain.Criteria;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.example.demo.mapper.FBoardMapper;
+
 
 import java.util.List;
 
@@ -16,7 +19,7 @@ import java.util.List;
 @Log4j2
 public class BoardMapperTests {
 
-    @Autowired
+    @Setter(onMethod_ = @Autowired)
     private FBoardMapper mapper;
 
 //    @Test
@@ -31,15 +34,44 @@ public class BoardMapperTests {
 //        list.forEach(board->log.info(board.getBno()));
 //    }
 
-    @Test
-    public void testSearch(){
-        Criteria cri=new Criteria();
-        cri.setKeyword("새로");
-        cri.setType("");
+//    @Test
+//    public void testInsert(){
+//        BoardVO boardVO = new BoardVO();
+//
+//        boardVO.setTitle("dd");
+//        boardVO.setContents("qqq");
+//        boardVO.setWriter("admin00");
+//
+//        mapper.insert(boardVO);
+//    }
 
-        List<BoardVO> list=mapper.getListWithPaging(cri);
+//    @Test
+    public void testInsertSelectKey(){
+        BoardVO boardVO = new BoardVO();
 
-        list.forEach(board->log.info(board));
+        boardVO.setTitle("dd");
+        boardVO.setContents("qqq");
+        boardVO.setWriter("admin00");
 
+        mapper.insertSelectKey(boardVO);
     }
+
+    @Test
+    public void testRead(){
+        BoardVO board = mapper.read(1048644L);
+
+        log.info(board);
+    }
+
+//    @Test
+//    public void testSearch(){
+//        Criteria cri=new Criteria();
+//        cri.setKeyword("새로");
+//        cri.setType("");
+//
+//        List<BoardVO> list=mapper.getListWithPaging(cri);
+//
+//        list.forEach(board->log.info(board));
+//
+//    }
 }

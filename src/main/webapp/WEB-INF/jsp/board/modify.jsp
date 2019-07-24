@@ -43,6 +43,11 @@
   <textarea class="form-control" rows="3" name='contents' ><c:out value="${board.contents}"/></textarea>
 </div>
 
+<div class="form-group">
+  <label>Writer</label>
+  <input class="form-control" name='writer' value='<c:out value="${board.writer}"/>' readonly="readonly"></input>
+</div>
+
 <!-- <div class="form-group">
   <label>RegDate</label>
   <input class="form-control" name='regDate'

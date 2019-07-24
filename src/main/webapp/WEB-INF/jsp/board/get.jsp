@@ -22,20 +22,31 @@
       <!-- /.panel-heading -->
       <div class="panel-body">
 
-          <div class="form-group">
-          <label>Bno</label> <input class="form-control" name='bno'
-            value='<c:out value="${board.bno }"/>' readonly="readonly">
+        <div class="form-group">
+<%--          <label>Bno</label>--%>
+            <span name='bno' readonly="readonly" style="font-weight:lighter">
+                <c:out value="# ${board.bno }"/>
+            </span>
         </div>
 
         <div class="form-group">
-          <label>Title</label> <input class="form-control" name='title'
-            value='<c:out value="${board.title }"/>' readonly="readonly">
+<%--          <label>Title</label> <input class="form-control" name='title'--%>
+<%--            value='<c:out value="${board.title }"/>' readonly="readonly">--%>
+             <h2 name='title' readonly="readonly">
+                <c:out value="${board.title }"/>
+            </h2>
         </div>
 
+        <hr/>
+
         <div class="form-group">
-          <label>Text area</label>
-          <textarea class="form-control" rows="3" name='contents'
-            readonly="readonly"><c:out value="${board.contents}" /></textarea>
+<%--          <label>Text area</label>--%>
+<%--          <textarea class="form-control" rows="3" name='contents'--%>
+<%--            readonly="readonly"><c:out value="${board.contents}" /></textarea>--%>
+
+            <article name="contents" readonly="readonly">
+                <c:out value="${board.contents}" />
+            </article>
         </div>
 
 
@@ -55,12 +66,12 @@
 
 <c:if test="${pinfo.username eq board.writer}">
 
-<button data-oper='modify' class="btn btn-default">Modify</button>
+
 
 </c:if>
 </sec:authorize> -->
 
-
+<button data-oper='modify' class="btn btn-default">Modify</button>
 <button data-oper='list' class="btn btn-info">List</button>
 
 <%-- <form id='operForm' action="/boad/modify" method="get">
@@ -92,8 +103,6 @@
     <div class='bigPicture'>
     </div>
 </div>
-
-
 
 <style>
     .uploadResult {
@@ -172,9 +181,9 @@
 
        <div class="panel-heading">
             <i class="fa fa-comments fa-fw"></i> Reply
-           <sec:authorize access="isAuthenticated()">
+<%--           <sec:authorize access="isAuthenticated()">--%>
            <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
-           </sec:authorize>
+<%--           </sec:authorize>--%>
         </div>
 
       <!-- /.panel-heading -->
@@ -255,7 +264,6 @@ $(document).ready(function() {
         replyService.getList({bno:bnoValue,page: page|| 1 }, function(replyCnt, list) {
 
         console.log("list: " + list);
-        console.log(list);
 
         if (page == -1){
             pageNum=Math.ceil(replyCnt/10.0);
@@ -276,6 +284,7 @@ $(document).ready(function() {
         	   +list[i].replyer+"</strong>";
            str +="    <small class='pull-right text-muted'>"
                +replyService.displayTime(list[i].replyDate)+"</small></div>";
+           //replyService.displayTime(list[i].replyDate)
            str +="    <p>"+list[i].reply+"</p></div></li>";
          }
 
