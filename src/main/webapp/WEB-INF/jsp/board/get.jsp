@@ -64,20 +64,39 @@
 
 <sec:authorize access="isAuthenticated()">
 
-  <c:if test="${pinfo.username eq board.writer}">
+
+    <input type="hidden" id="curuser" value="${pinfo.username}" />
+
+    <c:if test="${pinfo.username eq board.writer}">
 
       <button data-oper='modify' class="btn btn-default">Modify</button>
 
   </c:if>
 </sec:authorize>
+
 <button data-oper='list' class="btn btn-info">List</button>
+
+<buttom id="like" data-oper='like' class="btn btn-default" style="background-color: red">좋아요 0</buttom>
+
+
+<%--  <div>--%>
+<%--      <div class="w3-border w3-center w3-padding">--%>
+<%--              추천 기능은 <button type="button" id="newLogin"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br />--%>
+<%--              <i class="fa fa-heart" style="font-size:16px;color:red"></i>--%>
+<%--              <span class="rec_count"></span>--%>
+<%--              <button class="w3-button w3-black w3-round" id="rec_update">--%>
+<%--                  <i class="fa fa-heart" style="font-size:16px;color:red"></i>--%>
+<%--                  &nbsp;<span class="rec_count"></span>--%>
+<%--              </button>--%>
+<%--      </div>--%>
+<%--  </div>--%>
 
 <%-- <form id='operForm' action="/boad/modify" method="get">
   <input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
 </form> --%>
 
-
 <form id='operForm' action="/board/modify" method="get">
+
   <input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
   <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
   <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
@@ -85,6 +104,9 @@
   <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 
 </form>
+
+<%--  <sec:authentication property="principal" var="pinfo"/>--%>
+
 
       </div>
       <!--  end panel-body -->
@@ -302,7 +324,19 @@ $(document).ready(function() {
          showReplyPage(replyCnt);
 
        });//end function
-     }//end showList
+     }//end showLis
+
+    showLikeCount();
+
+    function showLikeCount(){
+        replyService.getLikeCount(bnoValue, function(total){
+            console.log("좋아요 number : "+total);
+
+            $("#like").html("좋아요 "+total);
+
+
+        })
+    }
 
      var modal = $(".modal");
      var modalInputReply = modal.find("input[name='reply']");
@@ -330,6 +364,41 @@ $(document).ready(function() {
          $(".modal").modal("show");
 
      });
+
+
+     var curuser=$('#curuser').val();
+
+    $("#like").on("click", function(e){
+
+        var like_info = {
+            bno: bnoValue,
+            userid:curuser
+        };
+
+        if (!curuser){
+            alert("로그인을 해주세요.");
+            return ;
+        }
+
+        replyService.checkLikeDuplicate(like_info, function (result) {
+            console.log("result result : "+result);
+
+            if (result>0){
+                replyService.cancelLikeButton(like_info, function (result) {
+                    alert("추천을 취소하였습니다.");
+                    showLikeCount();
+                    return ;
+                })
+            }else {
+                replyService.likeadd(like_info, function (result) {
+                    alert("추천하였습니다.");
+
+                    showLikeCount();
+                })
+            }
+        })
+    });
+
 
     modalRegisterBtn.on("click",function(e){
 
@@ -376,7 +445,6 @@ $(document).ready(function() {
             return;
 
         }
-
 
         replyService.remove(rno, originalReplyer, function(result){
 
@@ -525,11 +593,28 @@ $(document).ready(function() {
 
   $("button[data-oper='list']").on("click", function(e){
 
+      alert("123");
+
     operForm.find("#bno").remove();
     operForm.attr("action","/board/list")
     operForm.submit();
 
   });
+
+    $("button[data-oper='list']").on("click", function(e){
+     alert("123");
+  });
+
+    $()
+
+
+
+    // $("#like").on("click", function(e){
+    //
+    //     alert("123");
+    //
+    // });
+
 });
 </script>
 
@@ -608,6 +693,12 @@ $(document).ready(function() {
         });
 
     })
+</script>
+
+
+<script>
+
+
 </script>
 
 <%@include file="../includes/footer.jsp"%>

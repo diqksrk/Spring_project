@@ -23,6 +23,56 @@ var replyService= (function(){
         })
     }
 
+    function likeadd(like_info, callback,error){
+    	console.log("like add ");
+
+    	$.ajax({
+			type:'post',
+			url : '/like/new',
+			data : JSON.stringify(like_info),
+			contentType:"application/json; charset=utf-8",
+			success : function (results, status, xhr) {
+				if (callback){
+					callback(results);
+				}
+			},
+			error : function (xhr, status, er) {
+				if (error){
+					error(er);
+				}
+			}
+		})
+	}
+
+    function getLikeCount(bno, callback, error){
+    	$.getJSON("/like/"+bno,
+			function (data) {
+				// if (callback()){
+					callback(data.total);
+				// }
+		}).fail(function (xhr, status, err) {
+			if (error){
+				error();
+			}
+		})
+
+	}
+
+	function checkLikeDuplicate(like_info, callback, error) {
+
+    	$.getJSON("/like/"+ like_info.bno + "/" + like_info.userid,
+			function (data) {
+				if (callback){
+					callback(data.total);
+				}
+			}).fail(function (xhr, status, err) {
+			if (error){
+				error();
+			}
+		})
+
+	}
+
 	function getList(param, callback, error) {
 
 		var bno = param.bno;
@@ -30,7 +80,6 @@ var replyService= (function(){
 
 		$.getJSON("/replies/pages/" + bno + "/" + page,
 			function(data) {
-
 				if (callback) {
 					//callback(data); // 댓글 목록만 가져오는 경우
 					callback(data.replyCnt, data.list); //댓글 숫자와 목록을 가져오는 경우
@@ -38,6 +87,26 @@ var replyService= (function(){
 			}).fail(function(xhr, status, err) {
 			if (error) {
 				error();
+			}
+		});
+	}
+
+	function cancelLikeButton(like_info, callback, error) {
+		$.ajax({
+			type : 'delete',
+			url : '/like/' + like_info.bno + "/" + like_info.userid,
+			data:  JSON.stringify(like_info),
+			contentType: "application/json; charset=utf-8",
+			success : function(deleteResult, status, xhr) {
+
+				if (callback) {
+					callback(deleteResult);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
 			}
 		});
 	}
@@ -56,6 +125,7 @@ var replyService= (function(){
 			contentType: "application/json; charset=utf-8",
 
 			success : function(deleteResult, status, xhr) {
+
 				if (callback) {
 					callback(deleteResult);
 				}
@@ -136,11 +206,49 @@ var replyService= (function(){
 		}
 	};
 
-    return {add:add,
+    // function modfiyLike(like_info){
+	//
+    // 	console.log("Like bno ; "+like_info.bno);
+	//
+    // 	$.ajax({
+	// 		type:'post',
+	// 		url : "/like/"+like_info.bno,
+	// 		data : JSON.stringify(like_info),
+	// 		contentType:"application/json; charset=utf-8",
+	// 		success :function (){
+	// 			recCount(like_info.bno);
+	// 		},
+	// 		error : function(xhr, status, er) {
+	// 			if (error) {
+	// 				error(er);
+	// 			}
+	// 		}
+	// 	})
+	// }
+
+	function recCount(bno) {
+		$.get("/like/" + bno , function(result) {
+
+			if (callback) {
+				callback(result);
+			}
+
+		}).fail(function(xhr, status, err) {
+			if (error) {
+				error();
+			}
+		});
+	};
+
+	return {add:add,
+			likeadd : likeadd,
+			cancelLikeButton : cancelLikeButton,
+			checkLikeDuplicate : checkLikeDuplicate,
             getList:getList,
             remove:remove,
             update:update,
             get:get,
-            displayTime:displayTime
+            displayTime:displayTime,
+			getLikeCount:getLikeCount
             };
 })();
