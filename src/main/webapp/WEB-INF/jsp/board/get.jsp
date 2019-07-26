@@ -365,7 +365,6 @@ $(document).ready(function() {
 
      });
 
-
      var curuser=$('#curuser').val();
 
     $("#like").on("click", function(e){
@@ -593,20 +592,15 @@ $(document).ready(function() {
 
   $("button[data-oper='list']").on("click", function(e){
 
-      alert("123");
-
     operForm.find("#bno").remove();
     operForm.attr("action","/board/list")
     operForm.submit();
 
   });
 
-    $("button[data-oper='list']").on("click", function(e){
-     alert("123");
-  });
-
-    $()
-
+  //   $("button[data-oper='list']").on("click", function(e){
+  //    alert("123");
+  // });
 
 
     // $("#like").on("click", function(e){
@@ -682,7 +676,6 @@ $(document).ready(function() {
             $(".bigPicture")
                 .html("<img src='/display?fileName="+fileCallPath+"' >")
                 .animate({width:'100%', height: '100%'}, 1000);
-
         }
 
         $(".bigPictureWrapper").on("click", function(e){

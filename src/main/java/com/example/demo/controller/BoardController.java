@@ -36,7 +36,7 @@ public class BoardController {
     private ReplyService rservice;
 
     @GetMapping("/list")
-    public void list(Criteria cri, Model model){
+    public void list(Criteria cri,Model model){
         log.info("list " + cri);
         model.addAttribute("list", service.getList(cri));
 //        model.addAttribute("pageMaker", new PageDTO(cri,123));
@@ -78,6 +78,7 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
+
 
     @GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
