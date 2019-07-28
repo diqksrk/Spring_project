@@ -29,4 +29,9 @@
         WHERE mem.userid = #{userid}
     </select>
 
+    <insert id="insert">
+        insert into tbl_member (userid, username, userpw)
+         values (#{userid}, #{username}, #{userpw})
+    </insert>
+
 </mapper>

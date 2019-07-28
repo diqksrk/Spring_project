@@ -64,12 +64,53 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
 
     .tcontainer {
         background-color: white;
+        height: 55%;
+    }
+
+    #main {
+        margin-top:7%;
+    }
+
+    .tcontainer tbody tr td:first-child {
+        text-align: left;
+        padding-left: 2%;
+        font-family: inherit;
+        width: 60%;
+    }
+
+    .tcontainer tbody tr td:first-child:hover {
+        text-decoration: underline;
+        color: orange;
+    }
+
+    .tcontainer tbody tr td:nth-child(2n) {
+        font-size: 13px;
+    }
+
+    .tcontainer tbody tr td:last-child {
+        text-align: right;
+        padding-right: 3%;
+        font-family: inherit;
+        font-size: 13px;
+    }
+
+    .tcontainer thead tr th {
+        color:black;
+        cursor:pointer;
+    }
+
+    .tcontainer thead tr th h4{
+        font-weight: bold;
+    }
+
+    .tcontainer thead tr th h4:hover{
+        text-decoration: underline;
+        color:orange;
     }
 </style>
 
 </head>
-<body>
-
+<body style="background-color: #F2F2F2;">
 
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: #1C1C1C;">
     <div class="navbar-header">
@@ -79,7 +120,7 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/home" style="color: white"><span>NANANANAU</span></a>
+        <a class="navbar-brand" href="/" style="color: white"><span>NANANANAU</span></a>
         <a class="navbar-brand" href="/board/list" style="color: white"><span>공지사항</span></a>
         <a class="navbar-brand" href="/board/list" style="color: white"><span>자유게시판</span></a>
         <a class="navbar-brand" href="/board/list" style="color: white"><span>유머게시판</span></a>
@@ -87,6 +128,69 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-comment fa-fw"></i> New Comment
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                <span class="pull-right text-muted small">12 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-tasks fa-fw"></i> New Task
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a class="text-center" href="#">
+                            <strong>See All Alerts</strong>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-alerts -->
+            </li>
+            <!-- /.dropdown -->
+
+
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -111,6 +215,21 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
             <!-- /.dropdown-user -->
         </li>
         <!-- /.dropdown -->
+
+
+<%--            <li class="dropdown" style="width: 10%;">--%>
+<%--                <div class="input-group custom-search-form">--%>
+<%--                    <input type="text" class="form-control" placeholder="Search...">--%>
+<%--                    <span class="input-group-btn">--%>
+<%--                                <button class="btn btn-default" type="button">--%>
+<%--                                    <i class="fa fa-search"></i>--%>
+<%--                                </button>--%>
+<%--                            </span>--%>
+<%--                </div>--%>
+<%--                <!-- /input-group -->--%>
+<%--            </li>--%>
+
+
     </ul>
     <!-- /.navbar-top-links -->
 </nav>
@@ -121,7 +240,7 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
 
 
     <!-- Header -->
-    <header id="header">
+<%--    <header id="header">--%>
         <!-- <span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
         <h1>This is <strong>Visualize</strong>, a responsive site template designed by <a href="http://templated.co">TEMPLATED</a><br />
         and released for free under the Creative Commons License.</h1>
@@ -132,7 +251,7 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
             <li><a href="#" class="icon style2 fa-500px"><span class="label">500px</span></a></li>
             <li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
         </ul> -->
-    </header>
+<%--    </header>--%>
 
 
     <!-- Navigation -->
@@ -148,9 +267,10 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
         <section class="thumbnails" style="text-align: center">
             <div>
                 <table class="tcontainer">
+<%--                    <h4 style="font-weight:bold;">자유게시판</h4>--%>
                     <thead>
                     <tr>
-                        <th style="color:black;"><h4 style="font-weight:bold; margin-left: 15%; margin-top: 15%">자유게시판</h4></th>
+                        <th onclick="location.href='/board/list'"><h4>자유게시판</h4></th>
                     </tr>
                     </thead>
 
@@ -158,6 +278,7 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
                         <tr>
                             <td onClick="location.href='/board/get?bno=<c:out value="${board.bno}"/>'">
                                 <c:out value="${board.title}" /></td>
+                            <td><c:out value="${board.writer}" /></td>
                             <td><fmt:formatDate pattern="yyyy-MM-dd"
                                                 value="${board.creationDate}" /></td>
                         </tr>
@@ -168,7 +289,7 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
                 <table class="tcontainer">
                     <thead>
                     <tr>
-                        <th style="color:black"><h4 style="font-weight:bold; margin-left: 15%; margin-top: 15%">유머게시판</h4></th>
+                        <th onclick="location.href='/board/list'"><h4>유머게시판</h4></th>
                     </tr>
                     </thead>
 
@@ -176,6 +297,7 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
                         <tr>
                             <td onClick="location.href='/board/get?bno=<c:out value="${board.bno}"/>'">
                                 <c:out value="${board.title}" /></td>
+                            <td><c:out value="${board.writer}" /></td>
                             <td><fmt:formatDate pattern="yyyy-MM-dd"
                                                 value="${board.creationDate}" /></td>
                         </tr>
@@ -186,13 +308,17 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
 
 
             <div>
-                <a href="https://openapi.sk.com/support/notice/detailView?ntiSeq=256&topYn=Y" style="height: 45%"  target="_blank">
-                    <img src="/resources/images/foradvertise.jpg"/>
-                </a>
+<%--                <div>--%>
+<%--                <div class="image-container" style="max-height: 330px;">--%>
+<%--                    <a href="https://openapi.sk.com/support/notice/detailView?ntiSeq=256&topYn=Y" style="height: 45%"  target="_blank">--%>
+<%--                        <img src="/resources/images/foradvertise.jpg"/>--%>
+<%--                    </a>--%>
+<%--                </div>--%>
+
                 <table class="tcontainer">
                     <thead>
                     <tr>
-                        <th style="color:black"><h4 style="font-weight:bold; margin-left: 15%; margin-top: 15%">공지사항</h4></th>
+                        <th onclick="location.href='/board/list'"><h4>공지사항</h4></th>
                     </tr>
                     </thead>
 
@@ -200,11 +326,19 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
                         <tr>
                             <td onClick="location.href='/board/get?bno=<c:out value="${board.bno}"/>'">
                                 <c:out value="${board.title}" /></td>
+                            <td><c:out value="${board.writer}" /></td>
                             <td><fmt:formatDate pattern="yyyy-MM-dd"
                                                 value="${board.creationDate}" /></td>
                         </tr>
                     </c:forEach>
                 </table>
+
+                <div class="image-container" style="max-height: 200px;">
+                    <a href="https://openapi.sk.com/support/notice/detailView?ntiSeq=256&topYn=Y" style="height: fit-content%"  target="_blank">
+                        <img src="/resources/images/foradvertise.jpg" style="height: 300px;"/>
+                    </a>
+                </div>
+
             </div>
 
         </section>
@@ -232,6 +366,17 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
 
 <!-- Custom Theme JavaScript -->
 <script src="/resources/dist/js/sb-admin-2.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+
+
+    });
+
+
+</script>
 
 
 

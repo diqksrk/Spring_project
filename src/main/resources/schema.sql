@@ -76,7 +76,7 @@ create table tbl_member_auth (
 
 
 CREATE TABLE tbl_humor (
-BNO NUMBER(10,0) primary key ,
+BNO NUMBER(10,0),
 TITLE VARCHAR2(200),
 CONTENTS VARCHAR2(1000),
 WRITER VARCHAR2(20),
@@ -85,15 +85,13 @@ CREATIONDATE DATE DEFAULT SYSDATE,
 UPDATEDATE DATE DEFAULT SYSDATE);
 
 
-create sequence seq_notice_board;
+create sequence seq_humor_board;
 
 alter table tbl_humor add constraint pk_humor_board primary key(bno);
 
-insert into tbl_humor (BNO, TITLE, CONTENTS, WRITER) values (seq_notice_board.nextval, 'boo', 'boooo', 'admin00');
+insert into tbl_humor (BNO, TITLE, CONTENTS, WRITER) values (seq_humor_board.nextval, 'boo', 'boooo', 'admin00');
 
-insert into tbl_humor (BNO, TITLE, CONTENTS,WRITER) (select seq_notice_board.nextval, title, contents,writer from tbl_humor);
-
-
+insert into tbl_humor (BNO, TITLE, CONTENTS,WRITER) (select seq_humor_board.nextval, title, contents,writer from tbl_humor);
 
 
 create table tbl_humor_reply (
@@ -113,6 +111,27 @@ alter table tbl_humor_reply add constraint fk_reply_humor
 foreign key (bno) references tbl_humor (bno);
 
 insert into tbl_humor_reply (rno, bno, reply, replyer) values (seq_humor_reply.nextval, 61, 'bdasdsa', 'sdasd');
+
+
+<!-- notice table query-->
+CREATE TABLE tbl_notice (
+BNO NUMBER(10,0),
+TITLE VARCHAR2(200),
+CONTENTS VARCHAR2(1000),
+WRITER VARCHAR2(20),
+REPLYCNT NUMBER(10,0) default 0,
+CREATIONDATE DATE DEFAULT SYSDATE,
+UPDATEDATE DATE DEFAULT SYSDATE);
+
+create sequence seq_notice_board;
+
+alter table tbl_notice add constraint pk_notice_board primary key(bno);
+
+insert into tbl_notice (BNO, TITLE, CONTENTS, WRITER) values (seq_notice_board.nextval, 'boo', 'boooo', 'admin00');
+
+insert into tbl_notice (BNO, TITLE, CONTENTS,WRITER) (select seq_notice_board.nextval, title, contents,writer from tbl_notice);
+
+
 
 
 
