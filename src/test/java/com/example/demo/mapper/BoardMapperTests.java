@@ -56,7 +56,7 @@ public class BoardMapperTests {
         mapper.insertSelectKey(boardVO);
     }
 
-    @Test
+//    @Test
     public void testRead(){
         BoardVO board = mapper.read(1048644L);
 
@@ -74,4 +74,18 @@ public class BoardMapperTests {
 //        list.forEach(board->log.info(board));
 //
 //    }
+
+    @Test
+    public void pagingTest(){
+        Criteria cri = new Criteria();
+        cri.setAmount(10);
+        cri.setPageNum(1);
+
+        List<BoardVO> list=mapper.getListWithPaging(cri, "tbl_board");
+
+        list.forEach(board->log.info(board));
+
+    }
+
+
 }

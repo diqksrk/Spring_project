@@ -21,7 +21,7 @@ public interface BoardService {
 
 //    public List<BoardVO> getList();
 
-    public List<BoardVO> getList(String tbl_name, Criteria cri);
+    public List<BoardVO> getList(Criteria cri, String tbl_name);
 
     public int getTotal(Criteria cri);
 

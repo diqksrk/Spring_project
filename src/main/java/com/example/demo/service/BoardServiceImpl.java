@@ -88,9 +88,9 @@ public class BoardServiceImpl implements BoardService {
 //    }
 
     @Override
-    public List<BoardVO> getList(String tbl_name, Criteria cri) {
+    public List<BoardVO> getList(Criteria cri, String tbl_name) {
         log.info("getList with criteria "+cri);
-        return mapper.getListWithPaging(tbl_name,cri);
+        return mapper.getListWithPaging(cri, tbl_name);
     }
 
     @Override

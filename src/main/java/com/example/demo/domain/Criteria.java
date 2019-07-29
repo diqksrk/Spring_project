@@ -17,7 +17,7 @@ public class Criteria {
     private String type;
     private String keyword;
 
-    
+    private String tbl_name;
 
     public Criteria(){
         this(1,10);
