@@ -12,7 +12,7 @@ import java.util.List;
 public interface FBoardMapper {
     public String getTitle();
 
-    public List<BoardVO> getListWithPaging(Criteria cri);
+    public List<BoardVO> getListWithPaging(@Param("tbl_name") String tbl_name, Criteria cri);
 
     public List<BoardVO> getList();
 

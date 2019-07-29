@@ -8,43 +8,68 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 
-@Log4j2
-public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
+//@Log4j2
+//public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
+//
+//    @Override
+//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
+//            throws IOException, ServletException {
+//
+//        log.warn("Login Success");
+//
+//        List<String> roleNames = new ArrayList<>();
+//
+//        auth.getAuthorities().forEach(authority -> {
+//
+//            roleNames.add(authority.getAuthority());
+//
+//        });
+//
+//        log.warn("ROLE NAMES: " + roleNames);
+//
+//        if (roleNames.contains("ROLE_ADMIN")) {
+//
+//            response.sendRedirect("/sample/admin");
+//            return;
+//        }
+//
+//        if (roleNames.contains("ROLE_MEMBER")) {
+//
+//            response.sendRedirect("/sample/member");
+//            return;
+//        }
+//
+//        response.sendRedirect("/");
+//    }
+//}
 
+
+public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+    public CustomLoginSuccessHandler(String defaultTargetUrl) {
+        setDefaultTargetUrl(defaultTargetUrl);
+    }
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
-            throws IOException, ServletException {
-
-        log.warn("Login Success");
-
-        List<String> roleNames = new ArrayList<>();
-
-        auth.getAuthorities().forEach(authority -> {
-
-            roleNames.add(authority.getAuthority());
-
-        });
-
-        log.warn("ROLE NAMES: " + roleNames);
-
-        if (roleNames.contains("ROLE_ADMIN")) {
-
-            response.sendRedirect("/sample/admin");
-            return;
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session != null) {
+            String redirectUrl = (String) session.getAttribute("prevPage");
+            if (redirectUrl != null) {
+                session.removeAttribute("prevPage");
+                getRedirectStrategy().sendRedirect(request, response, redirectUrl);
+            } else {
+                super.onAuthenticationSuccess(request, response, authentication);
+            }
+        } else {
+            super.onAuthenticationSuccess(request, response, authentication);
         }
-
-        if (roleNames.contains("ROLE_MEMBER")) {
-
-            response.sendRedirect("/sample/member");
-            return;
-        }
-
-        response.sendRedirect("/");
     }
 }

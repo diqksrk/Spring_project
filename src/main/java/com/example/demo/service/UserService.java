@@ -4,5 +4,5 @@ import com.example.demo.domain.MemberVO;
 
 public interface UserService {
 
-    public int register(MemberVO vo);
+    public int registerMember(MemberVO vo);
 }

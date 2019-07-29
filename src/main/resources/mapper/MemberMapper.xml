@@ -9,7 +9,7 @@
         <id property="userid" column="userid"/>
         <result property="userid" column="userid"/>
         <result property="userpw" column="userpw"/>
-        <result property="userName" column="username"/>
+        <result property="username" column="username"/>
         <result property="regDate" column="regdate"/>
         <result property="updateDate" column="updatedate"/>
         <collection property="authList" resultMap="authMap">
@@ -29,9 +29,14 @@
         WHERE mem.userid = #{userid}
     </select>
 
-    <insert id="insert">
+    <insert id="insertMember">
         insert into tbl_member (userid, username, userpw)
-         values (#{userid}, #{username}, #{userpw})
+        values (#{userid}, #{username}, #{userpw})
+    </insert>
+
+    <insert id="insertAuth">
+        insert into tbl_member_auth (userid, auth)
+        values (#{userid}, 'ROLE_ADMIN')
     </insert>
 
 </mapper>

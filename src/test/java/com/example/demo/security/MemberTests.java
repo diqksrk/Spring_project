@@ -3,6 +3,8 @@ package com.example.demo.security;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import com.example.demo.domain.MemberVO;
+import com.example.demo.mapper.MemberMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,10 +19,11 @@ import lombok.Setter;
 
 import javax.sql.DataSource;
 
+@SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @Log4j2
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
-        "file:src/main/webapp/WEB-INF/spring/security-context.xml"})
+//@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+//        "file:src/main/webapp/WEB-INF/spring/security-context.xml"})
 public class MemberTests {
 
     @Setter(onMethod_ = @Autowired)
@@ -29,7 +32,10 @@ public class MemberTests {
     @Setter(onMethod_ = @Autowired)
     private DataSource ds;
 
-//    @Test
+    @Setter(onMethod_ = @Autowired)
+    private MemberMapper memberMapper;
+
+    @Test
     public void testInsertMember() {
 
         String sql = "insert into tbl_member(userid, userpw, username) values (?,?,?)";
@@ -117,6 +123,17 @@ public class MemberTests {
 
             }
         }//end for
+    }
+
+//    @Test
+    public void insertTest(){
+        MemberVO vo=new MemberVO();
+        vo.setUserid("admin100");
+        vo.setUsername("강한");
+        vo.setUserpw(pwencoder.encode("pw100"));
+
+        memberMapper.insertMember(vo);
+
     }
 
 

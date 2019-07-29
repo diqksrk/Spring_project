@@ -59,14 +59,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // }
 
     @Bean
-    public AuthenticationSuccessHandler loginSuccessHandler() {
-        return new CustomLoginSuccessHandler();
+    public AuthenticationSuccessHandler successHandler() {
+        return new CustomLoginSuccessHandler("/");
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
+//        http.csrf().disable();
 
         http.authorizeRequests()
                 .antMatchers("/sample/all").permitAll()
@@ -75,9 +75,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/sample/member")
                 .access("hasRole('ROLE_MEMBER')");
 
+        http.authorizeRequests()
+                .antMatchers("/**").permitAll();
+
         http.formLogin()
                 .loginPage("/customLogin")
-                .loginProcessingUrl("/login");
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/")
+                .successHandler(successHandler());
 
         http.logout()
                 .logoutUrl("/customLogout")
@@ -96,6 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {

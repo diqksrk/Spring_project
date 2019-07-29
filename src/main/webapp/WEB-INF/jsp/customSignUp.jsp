@@ -26,6 +26,7 @@
     <div class="col-md-6">
         <h1> 회원가입 </h1>
         <form id="operForm">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="form-group">
                 <label for="name"> USER NAME </label>
                 <input type="text" class="form-control" id="name" name="username" placeholder="이름을 입력하세요" />

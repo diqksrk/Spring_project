@@ -38,13 +38,35 @@ public class BoardController {
     @GetMapping("/list")
     public void list(Criteria cri,Model model){
         log.info("list " + cri);
-        model.addAttribute("list", service.getList(cri));
+        model.addAttribute("list", service.getList("tbl_board" ,cri));
 //        model.addAttribute("pageMaker", new PageDTO(cri,123));
 
         int total=service.getTotal(cri);
         log.info("total : "+total);
         model.addAttribute("pageMaker", new PageDTO(cri,total));
     }
+
+//    @GetMapping("/humor")
+//    public void humorList(Criteria cri,Model model){
+//        log.info("humor list : " + cri);
+//        model.addAttribute("list", service.getList(cri));
+////        model.addAttribute("pageMaker", new PageDTO(cri,123));
+//
+//        int total=service.getTotal(cri);
+//        log.info("total : "+total);
+//        model.addAttribute("pageMaker", new PageDTO(cri,total));
+//    }
+
+//    @GetMapping("/notice")
+//    public void noticeList(Criteria cri,Model model){
+//        log.info("notice List : " + cri);
+//        model.addAttribute("list", service.getList(cri));
+////        model.addAttribute("pageMaker", new PageDTO(cri,123));
+//
+//        int total=service.getTotal(cri);
+//        log.info("total : "+total);
+//        model.addAttribute("pageMaker", new PageDTO(cri,total));
+//    }
 
     @GetMapping("")
     public String board(Model model){

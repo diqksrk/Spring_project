@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Handles requests for the application home page.
  */
@@ -37,6 +39,13 @@ public class HomeController {
 //        model.addAttribute("serverTime", formattedDate );
 
         return "home";
+    }
+
+    @GetMapping("/login")
+    public String loginForm(HttpServletRequest req){
+        String referer = req.getHeader("Referer");
+        req.getSession().setAttribute("prevPage", referer);
+        return "login";
     }
 
 }

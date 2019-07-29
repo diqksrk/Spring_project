@@ -35,7 +35,7 @@
 		from (
 		    select /*+INDEX_DESC(tbl_board pk_test_board) */ rownum rn, bno, title, contents, creationDate, updateDate, writer,
 		        replycnt
-		    from tbl_board
+		    from ${tbl_name}
 		    where
         ]]>
         
@@ -95,5 +95,8 @@
     <update id="updateReplyCnt">
         update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
     </update>
+
+
+
 
 </mapper>
