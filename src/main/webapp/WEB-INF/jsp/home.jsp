@@ -122,9 +122,9 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
             <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/" style="color: white"><span>NANANANAU</span></a>
-        <a class="navbar-brand" href="/board/list" style="color: white"><span>공지사항</span></a>
+        <a class="navbar-brand" href="/board/notice" style="color: white"><span>공지사항</span></a>
         <a class="navbar-brand" href="/board/list" style="color: white"><span>자유게시판</span></a>
-        <a class="navbar-brand" href="/board/list" style="color: white"><span>유머게시판</span></a>
+        <a class="navbar-brand" href="/board/humor" style="color: white"><span>유머게시판</span></a>
     </div>
     <!-- /.navbar-header -->
 
@@ -290,7 +290,7 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
                 <table class="tcontainer">
                     <thead>
                     <tr>
-                        <th onclick="location.href='/board/list'"><h4>유머게시판</h4></th>
+                        <th onclick="location.href='/board/humor'"><h4>유머게시판</h4></th>
                     </tr>
                     </thead>
 
@@ -319,7 +319,7 @@ Released for free under the Creative Commons Attribution 3.0 license (templated.
                 <table class="tcontainer">
                     <thead>
                     <tr>
-                        <th onclick="location.href='/board/list'"><h4>공지사항</h4></th>
+                        <th onclick="location.href='/board/notice'"><h4>공지사항</h4></th>
                     </tr>
                     </thead>
 

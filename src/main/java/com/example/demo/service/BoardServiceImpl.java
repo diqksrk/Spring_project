@@ -94,9 +94,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int getTotal(Criteria cri) {
+    public int getTotal(Criteria cri, String tbl_name) {
         log.info("get total count");
-        return mapper.getTotalCount(cri);
+        return mapper.getTotalCount(cri, tbl_name);
     }
 
     @Override

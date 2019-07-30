@@ -8,7 +8,6 @@ import com.example.demo.service.BoardService;
 import com.example.demo.service.ReplyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import oracle.jdbc.proxy.annotation.Methods;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,35 +37,43 @@ public class BoardController {
     @GetMapping("/list")
     public void list(Criteria cri,Model model){
         log.info("list " + cri);
+
         model.addAttribute("list", service.getList(cri, "tbl_board"));
 //        model.addAttribute("pageMaker", new PageDTO(cri,123));
 
-        int total=service.getTotal(cri);
+        int total=service.getTotal(cri, "tbl_board");
         log.info("total : "+total);
         model.addAttribute("pageMaker", new PageDTO(cri,total));
+        model.addAttribute("boardName", "자유게시판");
     }
 
-//    @GetMapping("/humor")
-//    public void humorList(Criteria cri,Model model){
-//        log.info("humor list : " + cri);
-//        model.addAttribute("list", service.getList(cri));
-////        model.addAttribute("pageMaker", new PageDTO(cri,123));
-//
-//        int total=service.getTotal(cri);
-//        log.info("total : "+total);
-//        model.addAttribute("pageMaker", new PageDTO(cri,total));
-//    }
+    @GetMapping("/humor")
+    public String humorList(Criteria cri,Model model){
+        log.info("humor list : " + cri);
+        model.addAttribute("list", service.getList(cri, "tbl_humor"));
+//        model.addAttribute("pageMaker", new PageDTO(cri,123));
 
-//    @GetMapping("/notice")
-//    public void noticeList(Criteria cri,Model model){
-//        log.info("notice List : " + cri);
-//        model.addAttribute("list", service.getList(cri));
-////        model.addAttribute("pageMaker", new PageDTO(cri,123));
-//
-//        int total=service.getTotal(cri);
-//        log.info("total : "+total);
-//        model.addAttribute("pageMaker", new PageDTO(cri,total));
-//    }
+        int total=service.getTotal(cri, "tbl_humor");
+        log.info("total : "+total);
+        model.addAttribute("pageMaker", new PageDTO(cri,total));
+        model.addAttribute("boardName", "유머게시판");
+
+        return "/board/list";
+    }
+
+    @GetMapping("/notice")
+    public String noticeList(Criteria cri,Model model){
+        log.info("notice List : " + cri);
+        model.addAttribute("list", service.getList(cri, "tbl_notice"));
+//        model.addAttribute("pageMaker", new PageDTO(cri,123));
+
+        int total=service.getTotal(cri, "tbl_notice");
+        log.info("total : "+total);
+        model.addAttribute("pageMaker", new PageDTO(cri,total));
+        model.addAttribute("boardName", "공지사항");
+
+        return "/board/list";
+    }
 
     @GetMapping("")
     public String board(Model model){
@@ -77,8 +84,8 @@ public class BoardController {
 
     @GetMapping("/register")
     @PreAuthorize("isAuthenticated()")
-    public void register(){
-
+    public void register(Model model){
+        model.addAttribute("boardName", "자유게시판");
     }
 
     @PostMapping("/register")
@@ -142,6 +149,7 @@ public class BoardController {
     @GetMapping({"/get", "/modify"})
     public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model){
         log.info("/get or modify");
+        model.addAttribute("boardName", "자유게시판");
         model.addAttribute("board", service.get(bno));
     }
 
@@ -166,20 +174,17 @@ public class BoardController {
     @PreAuthorize("principal.username==#writer")
     @PostMapping("/remove")
     public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr, String writer) {
-
         log.info("remove..." + bno);
 
         List<BoardAttachVO> attachList = service.getAttachList(bno);
-
         rservice.deleteAll(bno);
 
         if (service.remove(bno)) {
-
             // delete Attach Files
             deleteFiles(attachList);
-
             rttr.addFlashAttribute("result", "success");
         }
+
         return "redirect:/board/list" + cri.getListLink();
     }
 }

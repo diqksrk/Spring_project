@@ -11,7 +11,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tables</h1>
+		<h1 class="page-header" name="tableName" value="<c:out value="${boardName}" />"><c:out value="${boardName}" /></h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -43,7 +43,6 @@
 						<tr>
 							<td><c:out value="${board.bno}" /></td>
 							<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
-
 							<td>
                               <a class='move' href='<c:out value="${board.bno}"/>'>
                               <c:out value="${board.title}" />   <b>[  <c:out value="${board.replyCnt}" />  ]</b>
@@ -167,6 +166,27 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		var tableName = $('[name="tableName"]').attr("value");
+
+		showCurrentBoard();
+
+		function navBarColorChange(boardName){
+			console.log("board name : "+boardName);
+			var nav_bar = document.getElementById(boardName);
+			nav_bar.style.textDecoration="underline";
+			nav_bar.style.color="orange"
+		}
+
+		function showCurrentBoard(){
+			if (tableName === "자유게시판"){
+				navBarColorChange("freeBoard");
+			}else if (tableName === "유머게시판"){
+				navBarColorChange("humorBoard");
+			}else {
+				navBarColorChange("noticeBoard");
+			}
+		}
+
         var result = '<c:out value="${result}"/>';
 
         checkModal(result);

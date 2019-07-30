@@ -23,7 +23,7 @@ public interface BoardService {
 
     public List<BoardVO> getList(Criteria cri, String tbl_name);
 
-    public int getTotal(Criteria cri);
+    public int getTotal(Criteria cri, String tbl_name);
 
     public List<BoardAttachVO> getAttachList(Long bno);
 }

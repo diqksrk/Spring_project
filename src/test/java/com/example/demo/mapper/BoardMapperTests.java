@@ -75,16 +75,25 @@ public class BoardMapperTests {
 //
 //    }
 
+//    @Test
+//    public void pagingTest(){
+//        Criteria cri = new Criteria();
+//        cri.setAmount(10);
+//        cri.setPageNum(1);
+//
+//        List<BoardVO> list=mapper.getListWithPaging(cri, "tbl_board");
+//
+//        list.forEach(board->log.info(board));
+//
+//    }
+
     @Test
-    public void pagingTest(){
+    public void getCountTest(){
         Criteria cri = new Criteria();
-        cri.setAmount(10);
-        cri.setPageNum(1);
 
-        List<BoardVO> list=mapper.getListWithPaging(cri, "tbl_board");
+        int ccount = mapper.getTotalCount(cri, "tbl_humor");
 
-        list.forEach(board->log.info(board));
-
+        log.info("123123123213" + ccount);
     }
 
 

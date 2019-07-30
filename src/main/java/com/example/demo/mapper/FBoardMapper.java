@@ -26,7 +26,7 @@ public interface FBoardMapper {
 
     public int update(BoardVO boardVO);
 
-    public int getTotalCount(Criteria cri);
+    public int getTotalCount(@Param("cri") Criteria cri, @Param("tbl_name") String tbl_name);
 
     public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 }

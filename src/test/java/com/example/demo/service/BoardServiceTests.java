@@ -65,4 +65,16 @@ public class BoardServiceTests {
 //        board.setTitle("제목 수정");
 //        log.info("Modify result : "+service.modify(board));
 //    }
+
+
+    @Test
+    public void testList(){
+        log.info("cri");
+
+        Criteria cri = new Criteria();
+        cri.setAmount(10);
+        cri.setPageNum(1);
+
+        service.getList(cri, "tbl_board");
+    }
 }

@@ -63,9 +63,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/" style="color: white"><span>NANANANAU</span></a>
-                <a class="navbar-brand" href="/board/list" style="color: white"><span>공지사항</span></a>
-                <a class="navbar-brand" href="/board/list" style="color: white"><span>자유게시판</span></a>
-                <a class="navbar-brand" href="/board/list" style="color: white"><span>유머게시판</span></a>
+                <a class="navbar-brand" href="/board/notice" style="color: white"><span id="noticeBoard">공지사항</span></a>
+                <a class="navbar-brand" href="/board/list" style="color: white"><span id="freeBoard" value="123">자유게시판</span></a>
+                <a class="navbar-brand" href="/board/humor" style="color: white"><span id="humorBoard">유머게시판</span></a>
             </div>
             <!-- /.navbar-header -->
 

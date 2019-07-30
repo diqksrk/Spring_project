@@ -58,7 +58,7 @@
     </select>
 
     <select id="getTotalCount" resultType="int">
-        select count(*) from tbl_board
+        select count(*) from ${tbl_name}
         where
 
         <include refid="criteria"></include>
