@@ -8,7 +8,6 @@
 
 <div id="page-wrapper">
 
-
 <div class="row">
   <div class="col-lg-12">
       <h1 class="page-header" name="tableName" value="<c:out value="${boardName}" />"><c:out value="${boardName}" /></h1>
