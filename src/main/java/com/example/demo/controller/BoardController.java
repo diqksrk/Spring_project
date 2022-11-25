@@ -83,21 +83,21 @@ public class BoardController {
     }
 
     @GetMapping("/register")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public void register(Model model){
         model.addAttribute("boardName", "자유게시판");
     }
 
     @PostMapping("/register")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public String register(BoardVO board, RedirectAttributes rttr) {
         log.info("=================================");
 
         log.info("register: " + board);
 
-        if (board.getAttachList() != null){
-            board.getAttachList().forEach(attach -> log.info(attach));
-        }
+//        if (board.getAttachList() != null){
+//            board.getAttachList().forEach(attach -> log.info(attach));
+//        }
 
         log.info("=================================");
 

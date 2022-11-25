@@ -6,7 +6,6 @@ import com.example.demo.domain.ReplyVO;
 import com.example.demo.service.UtilService;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-import oracle.jdbc.proxy.annotation.Post;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

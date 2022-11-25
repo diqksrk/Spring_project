@@ -9,7 +9,7 @@
         <![CDATA[
         select /*+INDEX_DESC(tbl_board pk_test_board)*/ bno, title, contents, writer, creationdate
         from ${tbl_name}
-        where rownum <=5
+        limit 5
         ]]>
     </select>
 
