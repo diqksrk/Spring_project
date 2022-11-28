@@ -89,4 +89,27 @@
         update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
     </update>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <select id="getBoards" resultType="com.example.demo.domain.BoardVO">
+        SELECT *
+        from board
+       where board_info_idx = #{boardInfoIdx}
+    </select>
+
+
+
 </mapper>

@@ -22,12 +22,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping()
 @Log4j2
 @AllArgsConstructor
 public class BoardController {
@@ -186,5 +185,10 @@ public class BoardController {
         }
 
         return "redirect:/board/list" + cri.getListLink();
+    }
+
+    @GetMapping("/server/get_top_board_list/{board_idx}")
+    public ResponseEntity<BoardVO> getBoardList(@PathVariable("board_idx") Long boardInfoIdx) {
+        return new ResponseEntity<>(service.getBoards(boardInfoIdx), HttpStatus.OK);
     }
 }

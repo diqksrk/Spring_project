@@ -11,6 +11,10 @@ import java.util.List;
 
 public interface BoardService {
 
+    public BoardVO getBoards(Long boardInfoIdx);
+
+
+
     public void register(BoardVO titleDTO);
 
     public BoardVO get(Long bno);

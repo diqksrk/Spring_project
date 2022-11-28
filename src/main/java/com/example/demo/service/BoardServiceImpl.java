@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Log4j2
@@ -24,6 +23,35 @@ public class BoardServiceImpl implements BoardService {
 
     @Setter(onMethod_ = @Autowired)
     private BoardAttachMapper attachMapper;
+
+    @Override
+    public BoardVO getBoards(Long boardInfoIdx) {
+        BoardVO boards = mapper.getBoards(boardInfoIdx);
+
+        return boards;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Transactional
     @Override
@@ -105,6 +133,4 @@ public class BoardServiceImpl implements BoardService {
 
         return attachMapper.findByBno(bno);
     }
-
-
 }

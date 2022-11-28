@@ -10,6 +10,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 public interface FBoardMapper {
+
+    public BoardVO getBoards(Long boardInfoIdx);
+
+
+
+
     public String getTitle();
 
     public List<BoardVO> getListWithPaging(@Param("cri") Criteria cri, @Param("tbl_name") String tbl_name);
